@@ -1,107 +1,100 @@
 import React, { useRef, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Sphere, Line, OrbitControls } from '@react-three/drei'
+import { Torus, Icosahedron, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
-function NetworkLines() {
-  const linesRef = useRef<THREE.Group>(null!)
+function HolographicRings() {
+  const ringsRef = useRef<THREE.Group>(null!)
   
-  // Generate random network connections
-  const connections = useMemo(() => {
-    const lines = []
-    for (let i = 0; i < 20; i++) {
-      const start = new THREE.Vector3(
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4
-      )
-      const end = new THREE.Vector3(
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4,
-        (Math.random() - 0.5) * 4
-      )
-      lines.push([start, end])
-    }
-    return lines
-  }, [])
-
   useFrame((state) => {
-    if (linesRef.current) {
-      linesRef.current.rotation.y = state.clock.elapsedTime * 0.1
+    if (ringsRef.current) {
+      ringsRef.current.rotation.x = state.clock.elapsedTime * 0.3
+      ringsRef.current.rotation.z = state.clock.elapsedTime * 0.2
     }
   })
 
   return (
-    <group ref={linesRef}>
-      {connections.map((line, index) => (
-        <Line
-          key={index}
-          points={line}
-          color="#00ffff"
-          lineWidth={1}
-          transparent
-          opacity={0.6}
-        />
-      ))}
+    <group ref={ringsRef}>
+      <Torus args={[2, 0.05, 16, 100]}>
+        <meshPhongMaterial color="#00ffff" emissive="#001a1a" wireframe />
+      </Torus>
+      <Torus args={[2.5, 0.03, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
+        <meshPhongMaterial color="#ff0080" emissive="#1a0010" wireframe />
+      </Torus>
+      <Torus args={[3, 0.02, 16, 100]} rotation={[0, Math.PI / 2, 0]}>
+        <meshPhongMaterial color="#8000ff" emissive="#100010" wireframe />
+      </Torus>
     </group>
   )
 }
 
-function Globe() {
-  const globeRef = useRef<THREE.Mesh>(null!)
+function CentralCore() {
+  const coreRef = useRef<THREE.Mesh>(null!)
   
   useFrame((state) => {
-    if (globeRef.current) {
-      globeRef.current.rotation.y = state.clock.elapsedTime * 0.2
+    if (coreRef.current) {
+      coreRef.current.rotation.y = state.clock.elapsedTime * 0.5
+      coreRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.2
+      const scale = 1 + Math.sin(state.clock.elapsedTime * 2) * 0.1
+      coreRef.current.scale.setScalar(scale)
     }
   })
 
   return (
-    <Sphere ref={globeRef} args={[1.5, 32, 32]}>
+    <Icosahedron ref={coreRef} args={[1, 1]}>
       <meshPhongMaterial
-        color="#001122"
-        wireframe
+        color="#ffffff"
+        emissive="#0066ff"
         transparent
         opacity={0.8}
+        wireframe
       />
-    </Sphere>
+    </Icosahedron>
   )
 }
 
-function FloatingNodes() {
-  const nodesRef = useRef<THREE.Group>(null!)
+function FloatingParticles() {
+  const particlesRef = useRef<THREE.Group>(null!)
   
-  const nodes = useMemo(() => {
-    return Array.from({ length: 15 }, (_, i) => ({
-      position: [
-        (Math.random() - 0.5) * 8,
-        (Math.random() - 0.5) * 8,
-        (Math.random() - 0.5) * 8
-      ] as [number, number, number],
-      scale: Math.random() * 0.1 + 0.05,
-      speed: Math.random() * 0.02 + 0.01
-    }))
+  const particles = useMemo(() => {
+    return Array.from({ length: 50 }, (_, i) => {
+      const radius = 4 + Math.random() * 3
+      const theta = Math.random() * Math.PI * 2
+      const phi = Math.random() * Math.PI
+      return {
+        position: [
+          radius * Math.sin(phi) * Math.cos(theta),
+          radius * Math.sin(phi) * Math.sin(theta),
+          radius * Math.cos(phi)
+        ] as [number, number, number],
+        speed: Math.random() * 0.02 + 0.01,
+        size: Math.random() * 0.05 + 0.02
+      }
+    })
   }, [])
 
   useFrame((state) => {
-    if (nodesRef.current) {
-      nodesRef.current.children.forEach((child, index) => {
-        const node = nodes[index]
-        child.position.y += Math.sin(state.clock.elapsedTime * node.speed) * 0.01
-        child.rotation.x = state.clock.elapsedTime * node.speed
-        child.rotation.z = state.clock.elapsedTime * node.speed * 0.5
+    if (particlesRef.current) {
+      particlesRef.current.children.forEach((child, index) => {
+        const particle = particles[index]
+        child.rotation.x = state.clock.elapsedTime * particle.speed
+        child.rotation.y = state.clock.elapsedTime * particle.speed * 1.5
+        const pulse = 1 + Math.sin(state.clock.elapsedTime * 3 + index) * 0.3
+        child.scale.setScalar(pulse)
       })
     }
   })
 
   return (
-    <group ref={nodesRef}>
-      {nodes.map((node, index) => (
-        <mesh key={index} position={node.position}>
-          <boxGeometry args={[node.scale, node.scale, node.scale]} />
+    <group ref={particlesRef}>
+      {particles.map((particle, index) => (
+        <mesh key={index} position={particle.position}>
+          <octahedronGeometry args={[particle.size]} />
           <meshPhongMaterial
-            color={index % 3 === 0 ? "#00ff00" : index % 3 === 1 ? "#00ffff" : "#0066ff"}
-            emissive={index % 3 === 0 ? "#003300" : index % 3 === 1 ? "#003333" : "#001133"}
+            color={index % 4 === 0 ? "#00ffff" : index % 4 === 1 ? "#ff0080" : index % 4 === 2 ? "#8000ff" : "#00ff00"}
+            emissive={index % 4 === 0 ? "#003333" : index % 4 === 1 ? "#330020" : index % 4 === 2 ? "#200033" : "#003300"}
+            transparent
+            opacity={0.9}
           />
         </mesh>
       ))}
@@ -109,23 +102,48 @@ function FloatingNodes() {
   )
 }
 
+function EnergyField() {
+  const fieldRef = useRef<THREE.Mesh>(null!)
+  
+  useFrame((state) => {
+    if (fieldRef.current) {
+      fieldRef.current.rotation.y = -state.clock.elapsedTime * 0.1
+      fieldRef.current.material.opacity = 0.1 + Math.sin(state.clock.elapsedTime * 2) * 0.05
+    }
+  })
+
+  return (
+    <mesh ref={fieldRef}>
+      <sphereGeometry args={[5, 32, 32]} />
+      <meshPhongMaterial
+        color="#0066ff"
+        transparent
+        opacity={0.1}
+        wireframe
+      />
+    </mesh>
+  )
+}
+
 export function CyberGlobe() {
   return (
     <div className="w-full h-full">
-      <Canvas camera={{ position: [0, 0, 6], fov: 75 }}>
-        <ambientLight intensity={0.2} />
-        <pointLight position={[10, 10, 10]} intensity={0.8} color="#00ffff" />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00ff00" />
+      <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
+        <ambientLight intensity={0.3} />
+        <pointLight position={[5, 5, 5]} intensity={1} color="#00ffff" />
+        <pointLight position={[-5, -5, 5]} intensity={0.8} color="#ff0080" />
+        <pointLight position={[0, 0, -5]} intensity={0.6} color="#8000ff" />
         
-        <Globe />
-        <NetworkLines />
-        <FloatingNodes />
+        <EnergyField />
+        <HolographicRings />
+        <CentralCore />
+        <FloatingParticles />
         
         <OrbitControls
           enableZoom={false}
           enablePan={false}
           autoRotate
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={1}
         />
       </Canvas>
     </div>

@@ -6,43 +6,13 @@ import { Badge } from "@/components/ui/badge"
 
 const projects = [
   {
-    title: "Cybersecurity Threat Analysis Dashboard",
-    description: "Real-time threat monitoring system with automated vulnerability scanning and risk assessment capabilities.",
-    technologies: ["Python", "React", "Node.js", "MongoDB", "Azure"],
-    category: "Security",
-    icon: Shield,
-    color: "text-primary",
-    github: "#",
-    demo: "#"
-  },
-  {
-    title: "OSINT Investigation Platform",
-    description: "Comprehensive open-source intelligence gathering tool for digital forensics and threat intelligence.",
-    technologies: ["Python", "JavaScript", "PostgreSQL", "Docker"],
-    category: "Intelligence",
-    icon: Database,
-    color: "text-accent",
-    github: "#",
-    demo: "#"
-  },
-  {
-    title: "Cloud Security Compliance Checker",
-    description: "Automated cloud infrastructure security assessment tool for AWS, Azure, and GCP environments.",
-    technologies: ["Python", "AWS SDK", "Azure CLI", "Terraform"],
-    category: "Cloud Security",
-    icon: Cloud,
-    color: "text-secondary",
-    github: "#",
-    demo: "#"
-  },
-  {
-    title: "Vulnerability Management System",
-    description: "Enterprise-grade vulnerability tracking and remediation platform with automated reporting.",
-    technologies: ["Java", "Spring Boot", "React", "MySQL"],
-    category: "Security",
+    title: "Cybersecurity Portfolio Website",
+    description: "Modern interactive portfolio showcasing cybersecurity expertise with 3D holographic visualizations, real-time animations, and responsive design.",
+    technologies: ["React", "TypeScript", "Three.js", "Framer Motion", "Tailwind CSS"],
+    category: "Web Development",
     icon: Code,
-    color: "text-warning",
-    github: "#",
+    color: "text-primary",
+    github: "https://github.com/Anesuzues/code-cipher-gallery",
     demo: "#"
   }
 ]
