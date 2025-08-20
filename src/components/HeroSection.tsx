@@ -4,6 +4,7 @@ import { Shield, Download, ExternalLink, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CyberGlobe } from "@/components/3d/CyberGlobe"
+import { useNavigate } from "react-router-dom"
 
 const titles = [
   "Cybersecurity Specialist",
@@ -13,6 +14,7 @@ const titles = [
 ]
 
 export function HeroSection() {
+  const navigate = useNavigate()
   const [currentTitle, setCurrentTitle] = useState(0)
   const [displayedText, setDisplayedText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
@@ -167,6 +169,7 @@ export function HeroSection() {
             <Button
               size="lg"
               className="bg-gradient-cyber hover:scale-105 transition-all shadow-cyber"
+              onClick={() => navigate('/projects')}
             >
               <Shield className="mr-2 h-5 w-5" />
               View Security Projects
@@ -175,6 +178,14 @@ export function HeroSection() {
               variant="outline"
               size="lg"
               className="border-primary/50 hover:bg-primary/10 hover:scale-105 transition-all"
+              onClick={() => {
+                const link = document.createElement('a');
+                link.href = '/Anesu Kamombe resume.pdf';
+                link.download = 'Anesu Kamombe resume.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
             >
               <Download className="mr-2 h-5 w-5" />
               Download Resume

@@ -21,7 +21,6 @@ const navigationItems = [
   { title: "Skills", url: "/skills", icon: Code, section: "skills" },
   { title: "Projects", url: "/projects", icon: Terminal, section: "projects" },
   { title: "Experience", url: "/experience", icon: Database, section: "experience" },
-  { title: "Security", url: "/security", icon: Shield, section: "security" },
   { title: "Contact", url: "/contact", icon: Mail, section: "contact" },
 ]
 

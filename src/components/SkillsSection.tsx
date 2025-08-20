@@ -85,7 +85,7 @@ const achievements = [
 
 export function SkillsSection() {
   return (
-    <section className="py-20 px-6">
+    <section className="py-20 px-6" data-section="skills">
       <div className="container mx-auto">
         {/* Section Header */}
         <motion.div

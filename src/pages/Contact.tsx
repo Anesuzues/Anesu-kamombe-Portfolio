@@ -1,15 +1,15 @@
-import { HeroSection } from "@/components/HeroSection"
+import { ContactSection } from "@/components/ContactSection"
 import { MatrixBackground } from "@/components/MatrixBackground"
 
-const Index = () => {
+const Contact = () => {
   return (
     <main className="min-h-screen relative">
       <MatrixBackground />
       <div className="relative z-10">
-        <HeroSection />
+        <ContactSection />
       </div>
     </main>
   )
 }
 
-export default Index
+export default Contact
