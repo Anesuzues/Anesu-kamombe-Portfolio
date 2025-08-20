@@ -44,6 +44,8 @@ export default {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
+				success: 'hsl(var(--success))',
+				warning: 'hsl(var(--warning))',
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'
@@ -70,25 +72,74 @@ export default {
 			},
 			keyframes: {
 				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
+					from: { height: '0' },
+					to: { height: 'var(--radix-accordion-content-height)' }
 				},
 				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
+					from: { height: 'var(--radix-accordion-content-height)' },
+					to: { height: '0' }
+				},
+				'pulse-glow': {
+					'0%, 100%': { 
+						boxShadow: '0 0 5px hsl(var(--primary) / 0.5)' 
 					},
-					to: {
-						height: '0'
+					'50%': { 
+						boxShadow: '0 0 20px hsl(var(--primary) / 0.8)' 
 					}
+				},
+				'matrix-rain': {
+					'0%': { 
+						transform: 'translateY(-100%)', 
+						opacity: '0' 
+					},
+					'50%': { opacity: '1' },
+					'100%': { 
+						transform: 'translateY(100vh)', 
+						opacity: '0' 
+					}
+				},
+				'security-scan': {
+					'0%, 100%': { transform: 'translateX(-100%)' },
+					'50%': { transform: 'translateX(100%)' }
+				},
+				'typing': {
+					'0%': { width: '0' },
+					'100%': { width: '100%' }
+				},
+				'blink': {
+					'0%, 50%': { opacity: '1' },
+					'51%, 100%': { opacity: '0' }
+				},
+				'float': {
+					'0%, 100%': { transform: 'translateY(0px)' },
+					'50%': { transform: 'translateY(-10px)' }
+				},
+				'rotate-slow': {
+					'0%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(360deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+				'matrix-rain': 'matrix-rain 3s linear infinite',
+				'security-scan': 'security-scan 2s ease-in-out infinite',
+				'typing': 'typing 3s steps(40) 1s forwards',
+				'blink': 'blink 1s infinite',
+				'float': 'float 3s ease-in-out infinite',
+				'rotate-slow': 'rotate-slow 10s linear infinite'
+			},
+			backgroundImage: {
+				'gradient-cyber': 'var(--gradient-cyber)',
+				'gradient-matrix': 'var(--gradient-matrix)',
+				'gradient-glow': 'var(--gradient-glow)',
+				'grid-pattern': 'var(--grid-pattern)'
+			},
+			boxShadow: {
+				'cyber': 'var(--shadow-cyber)',
+				'matrix': 'var(--shadow-matrix)',
+				'terminal': 'var(--shadow-terminal)'
 			}
 		}
 	},

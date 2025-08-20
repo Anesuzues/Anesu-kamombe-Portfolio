@@ -1,14 +1,17 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { HeroSection } from "@/components/HeroSection"
+import { SkillsSection } from "@/components/SkillsSection"
+import { MatrixBackground } from "@/components/MatrixBackground"
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <main className="min-h-screen relative">
+      <MatrixBackground />
+      <div className="relative z-10">
+        <HeroSection />
+        <SkillsSection />
       </div>
-    </div>
-  );
-};
+    </main>
+  )
+}
 
-export default Index;
+export default Index
