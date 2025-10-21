@@ -44,6 +44,7 @@ export function HeroSection() {
     "IBM Cybersecurity", 
     "CISCO Network Security",
     "OSINT Fundamentals"
+     " CERTIFIED PENTESTER "
   ]
 
   return (
