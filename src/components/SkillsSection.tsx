@@ -15,6 +15,8 @@ const skillCategories = [
       { name: "CISA Compliance", level: 85 },
       { name: "Python Security Scripts", level: 92 },
       { name: "Vulnerability Assessment", level: 87 }
+      { name: "Making and  deploying RAG Agents ", level: 87 }
+    ]
     ]
   },
   {
