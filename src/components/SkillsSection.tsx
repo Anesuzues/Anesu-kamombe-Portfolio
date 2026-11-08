@@ -1,89 +1,70 @@
+import { lazy, Suspense } from "react"
 import { motion } from "framer-motion"
-import { Shield, Code, Cloud, BarChart3, Server, Lock, Search, Zap } from "lucide-react"
+import { Shield, Code, Cloud, BarChart3 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { TiltCard } from "@/components/TiltCard"
+
+const SkillSphere = lazy(() => import("@/components/3d/SkillSphere"))
 
 const skillCategories = [
   {
-    title: "Cybersecurity",
-    icon: Shield,
+    title: "AI & Data",
+    icon: BarChart3,
     color: "text-primary",
+    hex: "#00ffff",
     skills: [
-      { name: "Ethical Hacking", level: 95 },
-      { name: "Threat Analysis", level: 90 },
-      { name: "OSINT", level: 88 },
-      { name: "CISA Compliance", level: 85 },
-      { name: "Python Security Scripts", level: 92 },
-      { name: "Vulnerability Assessment", level: 87 }
-      { name: "Making and  deploying RAG Agents ", level: 87 }
-    ]
+      "RAG Architectures",
+      "LLM Development (Claude, Gemini)",
+      "Python",
+      "PostgreSQL / pgvector",
+      "Ollama (Local Inference)"
     ]
   },
   {
     title: "Development",
     icon: Code,
     color: "text-secondary",
+    hex: "#4d7cff",
     skills: [
-      { name: "React", level: 95 },
-      { name: "Node.js", level: 90 },
-      { name: "JavaScript", level: 95 },
-      { name: "TypeScript", level: 88 },
-      { name: "HTML/CSS", level: 95 },
-      { name: "Java", level: 85 }
+      "React / Next.js",
+      "TypeScript",
+      "Node.js / FastAPI",
+      "React Native",
+      "Java"
     ]
   },
   {
-    title: "Cloud Security",
+    title: "Cloud & DevOps",
     icon: Cloud,
     color: "text-accent",
+    hex: "#00ff66",
     skills: [
-      { name: "AWS", level: 82 },
-      { name: "Azure", level: 88 },
-      { name: "GCP", level: 78 },
-      { name: "Microsoft Azure AI", level: 90 },
-      { name: "Cloud Compliance", level: 85 }
+      "AWS",
+      "Azure",
+      "GCP",
+      "Terraform",
+      "Docker / CI/CD"
     ]
   },
   {
-    title: "Data Analytics",
-    icon: BarChart3,
+    title: "Security",
+    icon: Shield,
     color: "text-warning",
+    hex: "#ffc400",
     skills: [
-      { name: "Tableau", level: 90 },
-      { name: "Power BI", level: 88 },
-      { name: "Data Visualization", level: 92 },
-      { name: "SQL", level: 85 },
-      { name: "Python Data Analysis", level: 87 }
+      "Ethical Hacking",
+      "OSINT",
+      "Zero-Trust / SIEM",
+      "NIST / CIS Frameworks",
+      "Making & Deploying RAG Agents"
     ]
   }
 ]
 
-const achievements = [
-  {
-    icon: Lock,
-    title: "10+ Vulnerabilities",
-    subtitle: "Successfully remediated",
-    color: "text-primary"
-  },
-  {
-    icon: Code,
-    title: "500+ Lines/Week",
-    subtitle: "Code review coverage",
-    color: "text-secondary"
-  },
-  {
-    icon: Shield,
-    title: "25% Risk Reduction",
-    subtitle: "Security improvements",
-    color: "text-accent"
-  },
-  {
-    icon: Search,
-    title: "95% Coverage",
-    subtitle: "Code quality achieved",
-    color: "text-warning"
-  }
-]
+const sphereSkills = skillCategories.flatMap((c) =>
+  c.skills.map((label) => ({ label, color: c.hex }))
+)
 
 export function SkillsSection() {
   return (
@@ -101,28 +82,31 @@ export function SkillsSection() {
             Technical <span className="text-primary">Expertise</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Specialized in cybersecurity, full-stack development, and cloud technologies 
-            with a focus on building secure, scalable solutions.
+            Specialized in AI/RAG systems, full-stack development, and cloud infrastructure
+            with a security-first engineering background.
           </p>
         </motion.div>
 
-        {/* Achievements Grid */}
+        {/* 3D Skill Sphere */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+          transition={{ duration: 1 }}
+          className="relative mb-16 h-[380px] sm:h-[460px] lg:h-[520px]"
         >
-          {achievements.map((achievement, index) => (
-            <Card key={index} className="terminal-border hover:cyber-glow transition-all text-center">
-              <CardContent className="p-6">
-                <achievement.icon className={`h-8 w-8 mx-auto mb-3 ${achievement.color}`} />
-                <div className="text-2xl font-bold mb-1">{achievement.title}</div>
-                <div className="text-sm text-muted-foreground">{achievement.subtitle}</div>
-              </CardContent>
-            </Card>
-          ))}
+          <Suspense
+            fallback={
+              <div className="flex h-full items-center justify-center">
+                <div className="h-24 w-24 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+              </div>
+            }
+          >
+            <SkillSphere skills={sphereSkills} />
+          </Suspense>
+          <p className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 font-mono text-xs text-muted-foreground">
+            drag to rotate the skill graph
+          </p>
         </motion.div>
 
         {/* Skills Categories */}
@@ -135,48 +119,39 @@ export function SkillsSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: categoryIndex * 0.1 }}
             >
-              <Card className="terminal-border hover:cyber-glow transition-all h-full">
+              <TiltCard>
+              <Card className="terminal-border hover:cyber-glow transition-all bg-card/80 backdrop-blur-sm h-full">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <category.icon className={`h-6 w-6 ${category.color}`} />
                     <span className="text-xl font-bold">{category.title}</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  {category.skills.map((skill, skillIndex) => (
-                    <motion.div
-                      key={skill.name}
-                      initial={{ opacity: 0, width: 0 }}
-                      whileInView={{ opacity: 1, width: "100%" }}
-                      viewport={{ once: true }}
-                      transition={{ 
-                        duration: 0.8, 
-                        delay: categoryIndex * 0.1 + skillIndex * 0.05 
-                      }}
-                      className="space-y-2"
-                    >
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">{skill.name}</span>
-                        <Badge variant="outline" className="text-xs">
-                          {skill.level}%
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill, skillIndex) => (
+                      <motion.div
+                        key={skill}
+                        initial={{ opacity: 0, y: 8 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{
+                          duration: 0.4,
+                          delay: categoryIndex * 0.1 + skillIndex * 0.05
+                        }}
+                      >
+                        <Badge
+                          variant="outline"
+                          className="text-sm py-1.5 px-3 hover:cyber-glow hover:border-primary/60 transition-all"
+                        >
+                          {skill}
                         </Badge>
-                      </div>
-                      <div className="w-full bg-muted rounded-full h-2">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ 
-                            duration: 1, 
-                            delay: categoryIndex * 0.1 + skillIndex * 0.05 + 0.2 
-                          }}
-                          className={`h-2 rounded-full bg-gradient-cyber cyber-glow`}
-                        />
-                      </div>
-                    </motion.div>
-                  ))}
+                      </motion.div>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
+              </TiltCard>
             </motion.div>
           ))}
         </div>
@@ -192,11 +167,12 @@ export function SkillsSection() {
           <h3 className="text-2xl font-bold mb-8 text-glow">Professional Certifications</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {[
-              "Microsoft Azure AI Essentials",
-              "IBM Cybersecurity Fundamentals", 
-              "CISCO Network Security",
-              "OSINT Tactics & Analysis",
-              "Tableau Data Visualization"
+              "Aviatrix ACE Multicloud Network Associate",
+              "AWS AI Practitioner (Udacity/Accenture)",
+              "Azure AI Essentials Professional",
+              "Architecting LLM Apps on Azure: RAG & Agents",
+              "IBM Cybersecurity Fundamentals",
+              "OSINT Fundamentals (Security Blue Team)"
             ].map((cert, index) => (
               <Badge 
                 key={cert}

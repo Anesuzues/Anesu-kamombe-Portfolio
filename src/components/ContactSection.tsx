@@ -2,9 +2,11 @@ import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, Github, Linkedin, Send, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { TiltCard } from "@/components/TiltCard"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
+import { useToast } from "@/hooks/use-toast"
 
 const contactInfo = [
   {
@@ -24,7 +26,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: "Location",
-    value: "Cape Town, South Africa",
+    value: "Midrand / Cape Town, SA · Open to Relocation & Remote",
     href: "#",
     color: "text-accent"
   }
@@ -48,6 +50,7 @@ const socialLinks = [
 ]
 
 export function ContactSection() {
+  const { toast } = useToast()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -58,8 +61,23 @@ export function ContactSection() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const { name, email, subject, message } = formData
-    const mailtoLink = `mailto:anesukamombe8@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      toast({
+        title: "Missing a few details",
+        description: "Please fill in your name, email, and a message before sending.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    const mailtoLink = `mailto:anesukamombe8@gmail.com?subject=${encodeURIComponent(subject || `Portfolio inquiry from ${name}`)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`
     window.location.href = mailtoLink
+
+    toast({
+      title: "Opening your email client...",
+      description: "If nothing opens, email anesukamombe8@gmail.com directly.",
+    })
   }
 
   return (
@@ -89,7 +107,8 @@ export function ContactSection() {
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
-            <Card className="terminal-border hover:cyber-glow transition-all">
+            <TiltCard max={4}>
+            <Card className="terminal-border hover:cyber-glow transition-all bg-card/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
                   <Shield className="h-6 w-6 text-primary" />
@@ -120,8 +139,10 @@ export function ContactSection() {
                 ))}
               </CardContent>
             </Card>
+            </TiltCard>
 
-            <Card className="terminal-border hover:cyber-glow transition-all">
+            <TiltCard max={4}>
+            <Card className="terminal-border hover:cyber-glow transition-all bg-card/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle>Social Links</CardTitle>
               </CardHeader>
@@ -151,6 +172,7 @@ export function ContactSection() {
                 ))}
               </CardContent>
             </Card>
+            </TiltCard>
           </motion.div>
 
           {/* Contact Form */}
@@ -160,7 +182,7 @@ export function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <Card className="terminal-border hover:cyber-glow transition-all">
+            <Card className="terminal-border hover:cyber-glow transition-all bg-card/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle>Send a Message</CardTitle>
               </CardHeader>
@@ -168,8 +190,9 @@ export function ContactSection() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="text-sm font-medium mb-2 block">Name</label>
-                      <Input 
+                      <label htmlFor="contact-name" className="text-sm font-medium mb-2 block">Name</label>
+                      <Input
+                        id="contact-name"
                         placeholder="Your name"
                         className="border-primary/20 focus:border-primary"
                         value={formData.name}
@@ -177,8 +200,9 @@ export function ContactSection() {
                       />
                     </div>
                     <div>
-                      <label className="text-sm font-medium mb-2 block">Email</label>
-                      <Input 
+                      <label htmlFor="contact-email" className="text-sm font-medium mb-2 block">Email</label>
+                      <Input
+                        id="contact-email"
                         type="email"
                         placeholder="your.email@example.com"
                         className="border-primary/20 focus:border-primary"
@@ -187,20 +211,22 @@ export function ContactSection() {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Subject</label>
-                    <Input 
+                    <label htmlFor="contact-subject" className="text-sm font-medium mb-2 block">Subject</label>
+                    <Input
+                      id="contact-subject"
                       placeholder="Project inquiry, collaboration, etc."
                       className="border-primary/20 focus:border-primary"
                       value={formData.subject}
                       onChange={(e) => setFormData({...formData, subject: e.target.value})}
                     />
                   </div>
-                  
+
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Message</label>
-                    <Textarea 
+                    <label htmlFor="contact-message" className="text-sm font-medium mb-2 block">Message</label>
+                    <Textarea
+                      id="contact-message"
                       placeholder="Tell me about your project or inquiry..."
                       rows={6}
                       className="border-primary/20 focus:border-primary resize-none"
