@@ -1,84 +1,63 @@
 import { motion } from "framer-motion"
 import { Calendar, MapPin, Shield, Code, Award } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { TiltCard } from "@/components/TiltCard"
 import { Badge } from "@/components/ui/badge"
 
 const experiences = [
   {
-    title: "Power Platform Developer (Trainee)",
-    company: "Microsoft Power Up Program",
-    location: "Remote",
-    period: "September 2025 - Present",
-    type: "Training Program",
-    description: "Selected for a competitive, intensive training program sponsored by Microsoft focused on mastering the Power Platform suite (Power Apps, Power Automate, Power BI, Power Pages).",
+    title: "Head of Technology (Contract)",
+    company: "NobzTech",
+    location: "Midrand, SA",
+    period: "Oct 2025 - Present",
+    type: "Contract",
+    description: "Digital transformation & AI solutions company helping SA SMEs scale through custom platforms, automation, and AI.",
     achievements: [
-      "Developing scalable canvas and model-driven Power Apps to solve real-world business problems, improving data collection and workflow efficiency by an estimated 40%",
-      "Automating complex, repetitive business processes by building cloud flows with Power Automate, integrating with Microsoft 365 and third-party services to reduce manual effort",
-      "Transforming raw data into actionable insights by building interactive dashboards and reports in Power BI, enabling data-driven decision-making",
-      "Applying best practices for solution design, data modeling, and user experience (UX) within the Power Platform ecosystem"
+      "Lead technical architecture, delivery, and engineering decisions across 47+ digital projects covering AI, automation, CRM, eCommerce, and cloud solutions",
+      "Design and deploy AI-powered solutions — chatbot workflows, payment-enabled platforms, and operational tools — directly supporting client digital transformation",
+      "Oversee cloud infrastructure, DevOps, and CI/CD pipelines; drive cybersecurity posture across all client-facing and internal systems",
+      "Managed and mentored a cohort of WIL interns and junior developers, contributing to 25+ graduates placed into the workplace pipeline",
+      "Designed and delivered a 4-week Cybersecurity Upskilling Programme covering Linux, network security, web app security, and incident response"
     ],
-    technologies: ["Power Apps", "Power Automate", "Power BI", "Power Pages", "Microsoft 365", "Data Modeling"]
+    technologies: ["AI/LLM Systems", "Automation", "Cloud Infrastructure", "DevOps", "CI/CD", "Cybersecurity", "Team Leadership"]
   },
   {
-    title: "Software Developer Intern",
+    title: "Software Developer (Contract)",
     company: "Spane4All",
     location: "Remote",
-    period: "06/2025 - Present",
-    type: "Internship",
-    description: "Developed and tested software applications while collaborating with senior developers to troubleshoot complex issues and maintain high code quality standards.",
+    period: "Jun 2025 - Dec 2025",
+    type: "Contract · Part-time, concurrent with NobzTech",
+    description: "Developed and tested software applications across utilities and medium-sized modules within an Agile team, contributing directly to production codebases.",
     achievements: [
-      "Developed and tested at least 5+ software applications, ranging in size from small utilities to medium-sized modules",
-      "Collaborated with senior developers to troubleshoot and debug over 10 complex issues, reducing debugging time by an estimated 15%",
-      "Conducted unit tests and documented test results, achieving 95% code coverage for quality assurance",
-      "Wrote clean, maintainable code following industry best practices, resulting in a 10% reduction in code complexity",
-      "Contributed at least 3 ideas for project enhancements during team meetings, 2 of which were implemented and resulted in measurable improvements",
-      "Participated in code reviews and provided valuable feedback for improvements, reviewing an average of 500 lines of code per week"
+      "Developed and tested 5+ applications across utilities and medium-sized modules within an Agile team",
+      "Resolved 10+ complex issues alongside senior developers, reducing debugging time by ~15%",
+      "Achieved 95% unit test coverage on all delivered modules"
     ],
-    technologies: ["React", "Node.js", "JavaScript", "TypeScript", "HTML", "CSS", "MongoDB", "PostgreSQL", "Express.js", "Git", "Docker", "REST APIs", "Unit Testing", "Code Review"]
+    technologies: ["React", "Node.js", "JavaScript", "TypeScript", "Git", "Docker", "REST APIs", "Unit Testing"]
   },
   {
     title: "Accelerator Intern",
     company: "Sunderland Internacional",
-    location: "Cape Town",
-    period: "05/2025 - 07/2025",
+    location: "Cape Town, SA",
+    period: "May 2025 - Jun 2025",
     type: "Internship",
-    description: "Compiled databases and managed client outreach initiatives, improving lead generation and client engagement through data analysis and visualization.",
+    description: "Supported client outreach and retention initiatives through prospect research and data visualization.",
     achievements: [
-      "Compiled a database of 500 prospective clients through research, resulting in a 15% increase in lead generation",
-      "Researched and compiled a database of 350+ prospective clients, improving the efficiency of targeted outreach by 20%",
-      "Managed and organized 200 documents, improving information retrieval efficiency by 30%",
-      "Spearheaded 5 data visualizations in Tableau, providing actionable insights that improved client retention by 8%",
-      "Improved client participation by 15% and overall engagement by 10% through the implementation of 3 client feedback surveys"
+      "Compiled 500+ prospect records, increasing lead generation by 15%",
+      "Built 5 Tableau visualisations supporting client retention insights"
     ],
-    technologies: ["Tableau", "Data Analysis", "Database Management", "Client Research"]
-  },
-  {
-    title: "Cybersecurity Virtual Experience Program on Forage ",
-    company: " AIG Shields Up",
-    location: "Remote",
-    period: " May 2025 - July 2025",
-    type: "Internship",
-    description: "Assisted in network security monitoring and incident response. Gained hands-on experience with enterprise security tools and frameworks.",
-    achievements: [
-" Led 12 cybersecurity threat analysis simulations, identifying and mitigating an average of 5 critical vulnerabilities per simulation.",
-"Monitored CISA publications daily, alerting teams to 3 emerging high-severity threats and enabling security updates.",
-"Analyzed and remediated over 50+ vulnerabilities, reducing the company's overall risk score by 25%.",
-"Advised 5 teams on vulnerability remediation strategies, improving their average remediation time by 15%",
-"Automated Python script detects 10 common web vulnerabilities, saving the ethical hacking team 20 hours weekly",
-"Conducted cybersecurity research, publishing 2 white papers on emerging threats and presenting findings at 1 industry conference",
-
-],
-    technologies: ["Splunk", "Nmap", "Metasploit", "Kali Linux", "OSINT Tools","Python"]
+    technologies: ["Tableau", "Data Analysis", "Client Research"]
   }
 ]
 
 const education = [
   {
     degree: "Bachelor of Science in Computer Science",
-    institution: "University of South Africa",
-    location: "Pretoria, South Africa",
-    period: "2022 - 2024",
-    grade: "First Class Honours",
+    institution: "University of South Africa (UNISA)",
+    location: "South Africa",
+    period: "Completed Nov 2024",
+    grade: "Completed",
+    focus: "Data Structures & Algorithms · Software Engineering · Database Systems · Computer Networks · Information Security · Artificial Intelligence · Software Project Management",
   }
 ]
 
@@ -111,7 +90,8 @@ export function ExperienceSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
             >
-              <Card className="terminal-border hover:cyber-glow transition-all">
+              <TiltCard max={3}>
+              <Card className="terminal-border hover:cyber-glow transition-all bg-card/80 backdrop-blur-sm">
                 <CardHeader>
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div>
@@ -171,6 +151,7 @@ export function ExperienceSection() {
                   </div>
                 </CardContent>
               </Card>
+              </TiltCard>
             </motion.div>
           ))}
         </div>
@@ -184,7 +165,8 @@ export function ExperienceSection() {
         >
           <h3 className="text-2xl font-bold mb-8 text-glow text-center">Education</h3>
           {education.map((edu, index) => (
-            <Card key={index} className="terminal-border hover:cyber-glow transition-all">
+            <TiltCard key={index} max={4}>
+            <Card className="terminal-border hover:cyber-glow transition-all bg-card/80 backdrop-blur-sm">
               <CardContent className="p-6">
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                   <div>
@@ -210,6 +192,7 @@ export function ExperienceSection() {
                 </div>
               </CardContent>
             </Card>
+            </TiltCard>
           ))}
         </motion.div>
       </div>

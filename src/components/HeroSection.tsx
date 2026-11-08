@@ -1,20 +1,22 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, lazy, Suspense } from "react"
 import { motion } from "framer-motion"
 import { Shield, Download, ExternalLink, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { CyberGlobe } from "@/components/3d/CyberGlobe"
-import { useNavigate } from "react-router-dom"
+import { scrollToSection } from "@/lib/sections"
+
+const CyberGlobe = lazy(() =>
+  import("@/components/3d/CyberGlobe").then((m) => ({ default: m.CyberGlobe }))
+)
 
 const titles = [
-  "Cybersecurity Specialist",
-  "Full-Stack Developer", 
-  "Threat Analyst",
-  "Cloud Security Expert"
+  "Head of Technology",
+  "AI Systems Architect",
+  "Full-Stack Developer",
+  "Cybersecurity Specialist"
 ]
 
 export function HeroSection() {
-  const navigate = useNavigate()
   const [currentTitle, setCurrentTitle] = useState(0)
   const [displayedText, setDisplayedText] = useState("")
   const [isDeleting, setIsDeleting] = useState(false)
@@ -39,40 +41,10 @@ export function HeroSection() {
     return () => clearTimeout(timer)
   }, [displayedText, isDeleting, currentTitle])
 
-  const certifications = [
-    "Microsoft Azure AI",
-    "IBM Cybersecurity", 
-    "CISCO Network Security",
-    "OSINT Fundamentals"
-     " CERTIFIED PENTESTER "
-  ]
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-matrix opacity-60" />
-      <div className="absolute inset-0 grid-overlay opacity-30" />
-      
-      {/* Matrix Rain Effect */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute text-accent opacity-30 text-sm font-mono animate-matrix-rain"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${3 + Math.random() * 2}s`
-            }}
-          >
-            {Array.from({ length: 10 }).map((_, j) => (
-              <div key={j} className="block">
-                {Math.random() > 0.5 ? '1' : '0'}
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+      {/* Subtle grid over the global 3D scene */}
+      <div className="absolute inset-0 grid-overlay opacity-20 pointer-events-none" />
 
       <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         {/* Left Content */}
@@ -111,7 +83,7 @@ export function HeroSection() {
             transition={{ delay: 0.6 }}
           >
             <span className="text-primary">Secure Systems.</span>{" "}
-            <span className="text-secondary">Build Solutions.</span>{" "}
+            <span className="text-secondary">Build AI Platforms.</span>{" "}
             <span className="text-accent">Analyze Threats.</span>
           </motion.p>
 
@@ -123,40 +95,16 @@ export function HeroSection() {
             transition={{ delay: 0.8 }}
           >
             <div className="text-center terminal-border rounded-lg p-4 hover:cyber-glow transition-all">
-              <div className="text-3xl font-bold text-primary">95%</div>
-              <div className="text-sm text-muted-foreground">Code Coverage</div>
+              <div className="text-3xl font-bold text-primary">47+</div>
+              <div className="text-sm text-muted-foreground">Digital Projects</div>
             </div>
             <div className="text-center terminal-border rounded-lg p-4 hover:cyber-glow transition-all">
-              <div className="text-3xl font-bold text-accent">500+</div>
-              <div className="text-sm text-muted-foreground">Lines/Week</div>
+              <div className="text-3xl font-bold text-accent">5</div>
+              <div className="text-sm text-muted-foreground">AI Systems Live</div>
             </div>
             <div className="text-center terminal-border rounded-lg p-4 hover:cyber-glow transition-all">
-              <div className="text-3xl font-bold text-secondary">25%</div>
-              <div className="text-sm text-muted-foreground">Risk Reduction</div>
-            </div>
-          </motion.div>
-
-          {/* Certifications */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.0 }}
-            className="space-y-3"
-          >
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-              Certifications
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {certifications.map((cert, index) => (
-                <Badge 
-                  key={cert}
-                  variant="outline" 
-                  className="security-badge hover:scale-105 transition-transform"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {cert}
-                </Badge>
-              ))}
+              <div className="text-3xl font-bold text-secondary">25+</div>
+              <div className="text-sm text-muted-foreground">Devs Mentored</div>
             </div>
           </motion.div>
 
@@ -170,7 +118,7 @@ export function HeroSection() {
             <Button
               size="lg"
               className="bg-gradient-cyber hover:scale-105 transition-all shadow-cyber"
-              onClick={() => navigate('/projects')}
+              onClick={() => scrollToSection("projects")}
             >
               <Shield className="mr-2 h-5 w-5" />
               View Security Projects
@@ -199,11 +147,19 @@ export function HeroSection() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.4 }}
-          className="relative h-[600px] lg:h-[700px]"
+          className="relative h-[420px] sm:h-[520px] lg:h-[700px]"
         >
           {/* 3D Globe Container */}
           <div className="absolute inset-0 rounded-2xl overflow-hidden">
-            <CyberGlobe />
+            <Suspense
+              fallback={
+                <div className="h-full w-full flex items-center justify-center">
+                  <div className="h-32 w-32 rounded-full border-2 border-primary/30 border-t-primary animate-spin" />
+                </div>
+              }
+            >
+              <CyberGlobe />
+            </Suspense>
           </div>
           
           {/* Floating Security Elements */}
@@ -224,8 +180,11 @@ export function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+      <motion.button
+        type="button"
+        onClick={() => scrollToSection("skills")}
+        aria-label="Scroll to skills"
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 hidden lg:block hover:text-primary transition-colors"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
@@ -234,7 +193,7 @@ export function HeroSection() {
           <span className="text-sm mb-2">Scroll to explore</span>
           <ChevronDown className="h-6 w-6 animate-bounce" />
         </div>
-      </motion.div>
+      </motion.button>
     </section>
   )
 }
