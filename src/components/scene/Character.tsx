@@ -8,7 +8,7 @@ const SPRITES = spriteSizes;
 const NAMES = Object.keys(SPRITES) as PoseName[];
 const URLS = NAMES.map((n) => `/ava/${n}.webp`);
 /** World units per sprite pixel: a standing pose is ~3.3 units tall. */
-const UNIT = 3.3 / 716;
+const UNIT = 3.3 / spriteSizes.idle.h;
 const WALK_SPEED = 3.4;
 const IDLE_BREAKS: PoseName[] = ["coffee", "water", "stretch", "yawn", "idle"];
 

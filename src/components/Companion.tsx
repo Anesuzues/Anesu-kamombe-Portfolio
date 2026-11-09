@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { clickQuips, sections, spriteSizes, type PoseName } from "@/data/content";
 
-const SCALE = 0.25;
+const SCALE = 180 / spriteSizes.idle.h;
 
 /**
  * Small-screen version of the character: a fixed sprite in the bottom corner that

@@ -205,10 +205,10 @@ export const certifications = [
 
 /** Pixel sizes of the cut-out sprites in /public/ava. */
 export const spriteSizes: Record<PoseName, { w: number; h: number }> = {
-  idle: { w: 239, h: 716 }, walking: { w: 272, h: 715 }, pacing: { w: 204, h: 722 },
-  waving: { w: 266, h: 723 }, pointing: { w: 297, h: 717 }, coffee: { w: 291, h: 721 },
-  water: { w: 309, h: 711 }, stretch: { w: 316, h: 736 }, sitting: { w: 296, h: 534 },
-  reading: { w: 316, h: 520 }, thinking: { w: 301, h: 555 }, facepalm: { w: 302, h: 547 },
-  celebrate: { w: 339, h: 537 }, yawn: { w: 280, h: 532 }, dance: { w: 304, h: 529 },
-  sleep: { w: 280, h: 508 },
+  idle: { w: 316, h: 954 }, walking: { w: 357, h: 949 }, pacing: { w: 270, h: 961 },
+  waving: { w: 351, h: 963 }, pointing: { w: 390, h: 955 }, coffee: { w: 386, h: 959 },
+  water: { w: 411, h: 947 }, stretch: { w: 420, h: 984 }, sitting: { w: 400, h: 709 },
+  reading: { w: 421, h: 694 }, thinking: { w: 410, h: 733 }, facepalm: { w: 402, h: 727 },
+  celebrate: { w: 450, h: 712 }, yawn: { w: 372, h: 708 }, dance: { w: 428, h: 721 },
+  sleep: { w: 417, h: 677 },
 };
