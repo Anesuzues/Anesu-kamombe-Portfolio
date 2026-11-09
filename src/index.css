@@ -164,6 +164,12 @@
     border-radius: 16px 16px 4px 16px;
     transform-origin: bottom right;
   }
+  .speech-bubble.is-dom.is-left {
+    right: auto;
+    left: 40%;
+    border-radius: 16px 16px 16px 4px;
+    transform-origin: bottom left;
+  }
   .speech-bubble.is-dom.is-open { transform: translateY(0) scale(1); }
 
   /* Small-screen companion: the character as a fixed sprite in the corner */
