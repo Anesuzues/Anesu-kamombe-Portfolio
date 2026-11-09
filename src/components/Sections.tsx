@@ -5,8 +5,12 @@ import {
 } from "lucide-react";
 import { Tilt } from "./Tilt";
 import {
-  certifications, education, experience, highlights, profile, projects, sections, skillGroups, stats, summary,
+  certifications, education, experience, highlights, profile, projects, reactions, sections, skillGroups, stats, summary,
 } from "@/data/content";
+import { companion } from "@/lib/companion";
+
+const nudgeCv = () => companion.react({ pose: "shrug", quip: reactions.cv, ms: 2600 });
+const nudgeEmail = () => companion.react({ pose: "celebrate", quip: reactions.email, ms: 2600 });
 
 const reveal: Variants = {
   hidden: { opacity: 0, y: 28 },
@@ -64,7 +68,7 @@ export function Hero() {
         <a href="#projects" className="btn-gold">
           See my work <ArrowDown className="h-4 w-4" />
         </a>
-        <a href={profile.cv} download className="btn-ghost">
+        <a href={profile.cv} download className="btn-ghost" onPointerEnter={nudgeCv}>
           <Download className="h-4 w-4" /> Download CV
         </a>
       </motion.div>
@@ -78,7 +82,7 @@ export function Hero() {
         ))}
       </motion.dl>
       <motion.p variants={reveal} className="mt-8 hidden text-sm text-muted-foreground lg:block">
-        Psst: click the guy in the suit.
+        Psst: click the guy in the suit. Then click him too much.
       </motion.p>
     </Stage>
   );
@@ -182,7 +186,11 @@ export function Projects() {
       <Heading eyebrow="Selected projects" title="Built, shipped, in use" />
       <div className="grid gap-4 sm:grid-cols-2">
         {projects.map((p) => (
-          <motion.div key={p.name} variants={reveal}>
+          <motion.div
+            key={p.name}
+            variants={reveal}
+            onPointerEnter={() => companion.react({ quip: p.quip, ms: 3200 })}
+          >
             <Tilt className="glass flex h-full flex-col p-5">
               <div className="tilt-pop">
                 <div className="flex items-baseline justify-between gap-3">
@@ -305,10 +313,10 @@ export function Contact() {
         ))}
       </motion.div>
       <motion.div variants={reveal} className="mt-8 flex flex-wrap gap-3">
-        <a href={`mailto:${profile.email}`} className="btn-gold">
+        <a href={`mailto:${profile.email}`} className="btn-gold" onPointerEnter={nudgeEmail}>
           <Mail className="h-4 w-4" /> Say hello
         </a>
-        <a href={profile.cv} download className="btn-ghost">
+        <a href={profile.cv} download className="btn-ghost" onPointerEnter={nudgeCv}>
           <Download className="h-4 w-4" /> Download CV
         </a>
       </motion.div>

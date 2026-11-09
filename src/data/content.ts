@@ -1,5 +1,6 @@
 export type PoseName =
-  | "idle" | "walking" | "pacing" | "waving" | "pointing" | "coffee" | "water" | "stretch"
+  | "idle" | "pacing" | "waving" | "pointing" | "coffee" | "water" | "stretch" | "shrug"
+  | "walk0" | "walk1" | "walk2" | "walk3" | "walk4"
   | "sitting" | "reading" | "thinking" | "facepalm" | "celebrate" | "yawn" | "dance" | "sleep";
 
 export type FaceName =
@@ -32,6 +33,14 @@ export const sections: SectionDef[] = [
   { id: "contact", label: "Contact", side: "right", pose: "celebrate", face: "excited", accent: "#d9a441",
     quip: "You made it! Now send that email." },
 ];
+
+export const reactions = {
+  tooManyClicks: "Okay, okay. I'm not a button.",
+  asleep: "Zzz…",
+  wake: "I was resting my eyes.",
+  cv: "Go on, download it. It's a good read.",
+  email: "Yes! That one. Click that one.",
+};
 
 export const clickQuips = [
   "Careful, the suit is dry-clean only.",
@@ -127,6 +136,7 @@ export const experience = [
 export const projects = [
   {
     name: "JARVIS",
+    quip: "Thirty-five agents. I only argue with some of them.",
     subtitle: "AI Orchestration Platform",
     period: "2025 – Present",
     description:
@@ -137,6 +147,7 @@ export const projects = [
   },
   {
     name: "TenderPilot AI",
+    quip: "Tenders, minus the weekend of paperwork.",
     subtitle: "Tender management for SA SMEs",
     period: "2025",
     description:
@@ -147,6 +158,7 @@ export const projects = [
   },
   {
     name: "SYNTRA Financial Pro",
+    quip: "Four AI coaches judging your spending. Gently.",
     subtitle: "Cross-platform fintech app",
     period: "2025",
     description:
@@ -157,6 +169,7 @@ export const projects = [
   },
   {
     name: "PoolPal",
+    quip: "Stokvels, without the WhatsApp chaos.",
     subtitle: "Group savings platform",
     period: "2025",
     description:
@@ -203,12 +216,33 @@ export const certifications = [
   },
 ];
 
-/** Pixel sizes of the cut-out sprites in /public/ava. */
-export const spriteSizes: Record<PoseName, { w: number; h: number }> = {
-  idle: { w: 316, h: 954 }, walking: { w: 357, h: 949 }, pacing: { w: 270, h: 961 },
-  waving: { w: 351, h: 963 }, pointing: { w: 390, h: 955 }, coffee: { w: 386, h: 959 },
-  water: { w: 411, h: 947 }, stretch: { w: 420, h: 984 }, sitting: { w: 400, h: 709 },
-  reading: { w: 421, h: 694 }, thinking: { w: 410, h: 733 }, facepalm: { w: 402, h: 727 },
-  celebrate: { w: 450, h: 712 }, yawn: { w: 372, h: 708 }, dance: { w: 428, h: 721 },
-  sleep: { w: 417, h: 677 },
+/**
+ * Pixel sizes of the cut-out sprites in /public/ava. `ax` is the horizontal anchor
+ * (head centre, 0..1) used to keep the walk frames from jittering.
+ */
+export const spriteSizes: Record<PoseName, { w: number; h: number; ax?: number }> = {
+  idle: { w: 316, h: 949 },
+  pacing: { w: 267, h: 950 },
+  waving: { w: 345, h: 959 },
+  pointing: { w: 405, h: 954 },
+  coffee: { w: 386, h: 959 },
+  water: { w: 422, h: 951 },
+  stretch: { w: 407, h: 971 },
+  shrug: { w: 498, h: 954 },
+  sitting: { w: 435, h: 624 },
+  reading: { w: 373, h: 598 },
+  thinking: { w: 341, h: 616 },
+  facepalm: { w: 348, h: 618 },
+  celebrate: { w: 377, h: 622 },
+  yawn: { w: 320, h: 627 },
+  dance: { w: 358, h: 622 },
+  sleep: { w: 364, h: 633 },
+  walk0: { w: 435, h: 956, ax: 0.453 },
+  walk1: { w: 293, h: 946, ax: 0.585 },
+  walk2: { w: 267, h: 962, ax: 0.584 },
+  walk3: { w: 409, h: 961, ax: 0.516 },
+  walk4: { w: 293, h: 945, ax: 0.582 },
 };
+
+/** Side-view walk cycle, facing right. */
+export const walkCycle: PoseName[] = ["walk0", "walk1", "walk2", "walk3", "walk4", "walk2"];

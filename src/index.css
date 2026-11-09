@@ -168,12 +168,26 @@
 
   /* Small-screen companion: the character as a fixed sprite in the corner */
   .companion img { filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.7)); transform-origin: bottom center; }
-  .companion.is-walking img { animation: companion-walk 0.36s ease-in-out infinite; }
   .companion.is-dancing img { animation: companion-dance 0.4s ease-in-out infinite; }
   .companion.is-posed img { animation: companion-pop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1); }
-  @keyframes companion-walk {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-7px) rotate(2deg); }
+
+  .stage-loading {
+    @apply fixed bottom-5 right-5 z-20 hidden items-center gap-2 rounded-full px-4 py-2 text-xs text-muted-foreground lg:flex;
+    background: hsl(222 35% 9% / 0.8);
+    border: 1px solid hsl(var(--primary) / 0.25);
+    transition: opacity 0.5s ease;
+  }
+  .stage-loading::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: hsl(var(--primary));
+    animation: stage-pulse 1s ease-in-out infinite;
+  }
+  @keyframes stage-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.15); }
   }
   @keyframes companion-dance {
     0%, 100% { transform: translateY(0) rotate(-5deg) scaleX(1); }

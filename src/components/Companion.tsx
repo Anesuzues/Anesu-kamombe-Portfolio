@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { clickQuips, sections, spriteSizes, type PoseName } from "@/data/content";
+import { clickQuips, reactions, sections, spriteSizes, walkCycle, type PoseName } from "@/data/content";
+import { companion, idleFor, SLEEP_AFTER_MS } from "@/lib/companion";
 
 const SCALE = 180 / spriteSizes.idle.h;
 
@@ -10,8 +11,11 @@ const SCALE = 180 / spriteSizes.idle.h;
 export function Companion({ section }: { section: number }) {
   const def = sections[section];
   const [mode, setMode] = useState<"walking" | "posed" | "dancing">("posed");
+  const [override, setOverride] = useState<PoseName | null>(null);
+  const [frame, setFrame] = useState(0);
   const [bubble, setBubble] = useState<string | null>(null);
   const timers = useRef<number[]>([]);
+  const taps = useRef<number[]>([]);
 
   const later = (fn: () => void, ms: number) => {
     timers.current.push(window.setTimeout(fn, ms));
@@ -21,24 +25,79 @@ export function Companion({ section }: { section: number }) {
     timers.current = [];
   };
 
+  // Stroll on the spot briefly whenever the section changes.
   useEffect(() => {
     clear();
+    setOverride(null);
     setMode("walking");
     setBubble(def.quip);
-    later(() => setMode("posed"), 750);
+    later(() => setMode("posed"), 900);
     later(() => setBubble(null), 4800);
     return clear;
   }, [def.quip]);
 
+  useEffect(() => {
+    if (mode !== "walking") return;
+    const id = window.setInterval(() => setFrame((f) => (f + 1) % walkCycle.length), 120);
+    return () => window.clearInterval(id);
+  }, [mode]);
+
+  // Page-triggered reactions and dozing off when the visitor goes quiet.
+  useEffect(
+    () =>
+      companion.on((r) => {
+        clear();
+        if (r.pose) setOverride(r.pose);
+        if (r.quip) setBubble(r.quip);
+        later(() => {
+          setOverride(null);
+          setBubble(null);
+        }, r.ms ?? 3000);
+      }),
+    [],
+  );
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setOverride((cur) => {
+        const quiet = idleFor() > SLEEP_AFTER_MS;
+        if (quiet && cur === null) {
+          setBubble(reactions.asleep);
+          return "sleep";
+        }
+        if (!quiet && cur === "sleep") {
+          setBubble(null);
+          return null;
+        }
+        return cur;
+      });
+    }, 1500);
+    return () => window.clearInterval(id);
+  }, []);
+
   const onTap = () => {
     clear();
+    const now = performance.now();
+    taps.current = [...taps.current.filter((t) => now - t < 2500), now];
+    if (taps.current.length >= 3) {
+      taps.current = [];
+      setMode("posed");
+      setOverride("facepalm");
+      setBubble(reactions.tooManyClicks);
+      later(() => {
+        setOverride(null);
+        setBubble(null);
+      }, 2800);
+      return;
+    }
+    setOverride(null);
     setMode("dancing");
     setBubble(clickQuips[Math.floor(Math.random() * clickQuips.length)]);
     later(() => setMode("posed"), 2400);
     later(() => setBubble(null), 3400);
   };
 
-  const pose: PoseName = mode === "walking" ? "walking" : mode === "dancing" ? "dance" : def.pose;
+  const pose: PoseName =
+    mode === "walking" ? walkCycle[frame] : mode === "dancing" ? "dance" : (override ?? def.pose);
   const size = spriteSizes[pose];
 
   return (
@@ -46,14 +105,13 @@ export function Companion({ section }: { section: number }) {
       <div className={`speech-bubble is-dom ${bubble ? "is-open" : ""}`} aria-live="polite">
         {bubble ?? ""}
       </div>
-      <button type="button" onClick={onTap} aria-label="Make Anesu dance" className="block">
+      <button type="button" onClick={onTap} aria-label="Make Anesu dance" className="flex h-[184px] items-end justify-center">
         <img
-          key={pose}
           src={`/ava/${pose}.webp`}
           alt=""
           width={Math.round(size.w * SCALE)}
           height={Math.round(size.h * SCALE)}
-          style={{ width: size.w * SCALE, height: size.h * SCALE, transform: pose === "pointing" ? "scaleX(-1)" : undefined }}
+          style={{ width: size.w * SCALE, height: size.h * SCALE }}
           draggable={false}
         />
       </button>

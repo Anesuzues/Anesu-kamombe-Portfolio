@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { About, Contact, Credentials, Experience, Hero, Projects, Skills } from "@/components/Sections";
 import { Companion } from "@/components/Companion";
 import { scrollState } from "@/components/scene/scrollState";
@@ -77,11 +77,16 @@ function Nav({ active }: { active: number }) {
 
 const App = () => {
   const active = useActiveSection();
+  const [stageReady, setStageReady] = useState(false);
+  const onReady = useCallback(() => setStageReady(true), []);
   return (
     <>
       <Suspense fallback={null}>
-        <Scene section={active} />
+        <Scene section={active} onReady={onReady} />
       </Suspense>
+      <div className="stage-loading" style={{ opacity: stageReady ? 0 : 1 }} role="status" aria-hidden={stageReady}>
+        Setting the stage…
+      </div>
       <Nav active={active} />
       <Companion section={active} />
       <main className="relative z-10">
