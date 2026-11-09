@@ -1,29 +1,24 @@
-# Anesu Kamombe - Cybersecurity Portfolio
+# Anesu Kamombe · 3D Portfolio
 
-Modern interactive portfolio showcasing cybersecurity expertise with 3D holographic visualizations, real-time animations, and responsive design.
+Single-page interactive portfolio. A cut-out character (built from the AVA character sheet) lives on a
+three.js stage behind the content: he walks across the stage as you scroll, strikes a different pose for
+each section, takes coffee breaks when idle, and dances when clicked.
 
-## Technologies Used
+## Stack
 
-- React
-- TypeScript
-- Three.js
-- Framer Motion
-- Tailwind CSS
-- Vite
-- shadcn-ui
+React · TypeScript · Vite · three.js (`@react-three/fiber`, `@react-three/drei`) · Framer Motion · Tailwind CSS
 
-## Getting Started
+## Structure
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start development server: `npm run dev`
-4. Build for production: `npm run build`
+- `src/data/content.ts`: all copy (profile, skills, experience, projects, certifications) and the per-section pose / quip.
+- `src/components/scene/`: the 3D stage (`Scene.tsx`) and the animated character (`Character.tsx`).
+- `src/components/Sections.tsx`: the HTML content sections.
+- `public/ava/`: character sprites (16 poses), portrait and expression avatars.
 
-## Features
+## Development
 
-- Interactive 3D holographic model
-- Smooth animations and transitions
-- Responsive cybersecurity-themed design
-- Multi-page navigation
-- Contact form integration
-- Professional experience showcase
+```bash
+npm install
+npm run dev
+npm run build
+```

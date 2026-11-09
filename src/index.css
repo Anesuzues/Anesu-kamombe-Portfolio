@@ -2,196 +2,191 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Cybersecurity Portfolio Design System
-All colors are HSL values optimized for cyber-themed aesthetics
-*/
+/* AVA portfolio design system: midnight navy stage, tweed brown, gold and teal accents. */
 
 @layer base {
   :root {
-    /* Core cybersecurity theme colors */
-    --background: 216 100% 4%;
-    --foreground: 180 100% 90%;
+    --background: 222 48% 5%;
+    --foreground: 40 30% 94%;
 
-    /* Card and surface colors */
-    --card: 217 32% 8%;
-    --card-foreground: 180 100% 90%;
+    --card: 222 35% 9%;
+    --card-foreground: 40 30% 94%;
 
-    --popover: 217 32% 6%;
-    --popover-foreground: 180 100% 90%;
+    --popover: 222 35% 8%;
+    --popover-foreground: 40 30% 94%;
 
-    /* Cyber accent colors */
-    --primary: 180 100% 50%;
-    --primary-foreground: 216 100% 4%;
-    
-    --secondary: 240 100% 50%;
-    --secondary-foreground: 180 100% 90%;
+    --primary: 39 67% 55%;
+    --primary-foreground: 222 48% 6%;
 
-    /* Matrix green accent */
-    --accent: 120 100% 50%;
-    --accent-foreground: 216 100% 4%;
+    --secondary: 24 63% 33%;
+    --secondary-foreground: 40 30% 94%;
 
-    /* Muted colors for subtle elements */
-    --muted: 217 32% 12%;
-    --muted-foreground: 180 20% 60%;
+    --accent: 182 73% 38%;
+    --accent-foreground: 222 48% 6%;
 
-    /* Status colors */
+    --muted: 222 28% 14%;
+    --muted-foreground: 220 14% 72%;
+
     --destructive: 0 84% 60%;
-    --destructive-foreground: 180 100% 90%;
-    
-    --success: 120 100% 40%;
-    --warning: 45 100% 50%;
+    --destructive-foreground: 40 30% 94%;
 
-    /* Border and input styling */
-    --border: 217 32% 15%;
-    --input: 217 32% 10%;
-    --ring: 180 100% 50%;
+    --border: 36 32% 22%;
+    --input: 222 28% 12%;
+    --ring: 39 67% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    /* Cybersecurity gradients */
-    --gradient-cyber: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 50%, hsl(var(--accent)) 100%);
-    --gradient-matrix: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(217 32% 6%) 100%);
-    --gradient-glow: radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%);
-    
-    /* Cybersecurity shadows and glows */
-    --shadow-cyber: 0 0 20px hsl(var(--primary) / 0.5);
-    --shadow-matrix: 0 0 30px hsl(var(--accent) / 0.3);
-    --shadow-terminal: inset 0 0 20px hsl(var(--primary) / 0.1);
-    
-    /* Grid and scan line effects */
-    --grid-pattern: repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 98px,
-      hsl(var(--primary) / 0.1) 100px
-    );
-
-    /* Sidebar for portfolio navigation */
-    --sidebar-background: 217 32% 6%;
-    --sidebar-foreground: 180 100% 90%;
-    --sidebar-primary: 180 100% 50%;
-    --sidebar-primary-foreground: 216 100% 4%;
-    --sidebar-accent: 217 32% 10%;
-    --sidebar-accent-foreground: 180 100% 90%;
-    --sidebar-border: 217 32% 15%;
-    --sidebar-ring: 180 100% 50%;
+    --sidebar-background: 222 35% 7%;
+    --sidebar-foreground: 40 30% 94%;
+    --sidebar-primary: 39 67% 55%;
+    --sidebar-primary-foreground: 222 48% 6%;
+    --sidebar-accent: 222 28% 12%;
+    --sidebar-accent-foreground: 40 30% 94%;
+    --sidebar-border: 36 32% 22%;
+    --sidebar-ring: 39 67% 55%;
   }
 
-  /* Portfolio uses dark theme by default - no separate dark theme needed */
-}
-
-@layer base {
   * {
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    background: #070b14;
+  }
+
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-image: var(--grid-pattern);
+    @apply text-foreground overflow-x-hidden;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(1200px 700px at 78% 8%, rgba(138, 75, 31, 0.28), transparent 60%),
+      radial-gradient(900px 600px at 10% 90%, rgba(26, 163, 168, 0.14), transparent 60%),
+      linear-gradient(180deg, #0a101d 0%, #070b14 60%, #05080f 100%);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
   }
-  
-  /* Cybersecurity portfolio custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
+
+  h1, h2, h3, .font-display {
+    font-family: "Sora", "Inter", system-ui, sans-serif;
+    letter-spacing: -0.02em;
   }
-  
-  ::-webkit-scrollbar-track {
-    background: hsl(var(--background));
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
   }
-  
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--primary) / 0.5);
-    border-radius: 4px;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--primary));
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #070b14; }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--primary) / 0.45); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary)); }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--primary));
+    outline-offset: 3px;
+    border-radius: 6px;
   }
 }
 
 @layer components {
-  /* Cybersecurity text effects */
-  .text-glow {
-    text-shadow: 0 0 10px hsl(var(--primary) / 0.8);
+  .glass {
+    background: linear-gradient(160deg, hsl(222 35% 11% / 0.82), hsl(222 40% 7% / 0.72));
+    border: 1px solid hsl(var(--primary) / 0.18);
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 hsl(40 60% 80% / 0.05);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-radius: var(--radius);
   }
-  
-  .text-matrix {
-    color: hsl(var(--accent));
-    text-shadow: 0 0 5px hsl(var(--accent) / 0.5);
+
+  .text-gold {
+    background: linear-gradient(100deg, #f3d28a 0%, #d9a441 45%, #b9762f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
-  
-  /* Terminal-style elements */
-  .terminal-border {
-    border: 1px solid hsl(var(--primary) / 0.3);
-    box-shadow: var(--shadow-terminal);
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase text-primary;
+    letter-spacing: 0.24em;
   }
-  
-  /* Cyber glow effects */
-  .cyber-glow {
-    box-shadow: var(--shadow-cyber);
+
+  .chip {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-[13px] text-foreground/90;
+    background: hsl(222 28% 14% / 0.85);
+    border: 1px solid hsl(var(--primary) / 0.16);
   }
-  
-  .matrix-glow {
-    box-shadow: var(--shadow-matrix);
+
+  .btn-gold {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-primary-foreground transition-transform;
+    background: linear-gradient(100deg, #f0cb7c, #d9a441 55%, #b9762f);
+    box-shadow: 0 10px 30px -10px rgba(217, 164, 65, 0.6);
   }
-  
-  /* Grid overlay for cyber aesthetic */
-  .grid-overlay {
-    background-image: var(--grid-pattern);
+  .btn-gold:hover { transform: translateY(-2px); }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-foreground transition-colors;
+    border: 1px solid hsl(var(--primary) / 0.35);
+    background: hsl(222 35% 9% / 0.6);
   }
-  
-  /* Security badge styles */
-  .security-badge {
-    background: var(--gradient-cyber);
-    border: 1px solid hsl(var(--primary) / 0.5);
-    box-shadow: var(--shadow-cyber);
+  .btn-ghost:hover { border-color: hsl(var(--primary)); color: hsl(var(--primary)); }
+
+  /* 3D tilt cards */
+  .tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.25s ease-out;
+    will-change: transform;
+  }
+  .tilt > .tilt-pop { transform: translateZ(28px); }
+
+  /* Speech bubble rendered inside the 3D scene */
+  .speech-bubble {
+    width: max-content;
+    max-width: 240px;
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 500;
+    color: #1b1206;
+    background: linear-gradient(160deg, #fff6e2, #f0d59c);
+    border-radius: 16px 16px 16px 4px;
+    box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+    transform-origin: bottom left;
+    transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 1.4, 0.4, 1);
+  }
+  .speech-bubble.is-open { opacity: 1; transform: translateY(-50%) scale(1); }
+  .speech-bubble.is-dom {
+    position: absolute;
+    right: 40%;
+    bottom: 100%;
+    max-width: 180px;
+    font-size: 12.5px;
+    border-radius: 16px 16px 4px 16px;
+    transform-origin: bottom right;
+  }
+  .speech-bubble.is-dom.is-open { transform: translateY(0) scale(1); }
+
+  /* Small-screen companion: the character as a fixed sprite in the corner */
+  .companion img { filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.7)); transform-origin: bottom center; }
+  .companion.is-walking img { animation: companion-walk 0.36s ease-in-out infinite; }
+  .companion.is-dancing img { animation: companion-dance 0.4s ease-in-out infinite; }
+  .companion.is-posed img { animation: companion-pop 0.35s cubic-bezier(0.2, 1.4, 0.4, 1); }
+  @keyframes companion-walk {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-7px) rotate(2deg); }
+  }
+  @keyframes companion-dance {
+    0%, 100% { transform: translateY(0) rotate(-5deg) scaleX(1); }
+    50% { transform: translateY(-9px) rotate(5deg) scaleX(-1); }
+  }
+  @keyframes companion-pop {
+    0% { transform: scale(0.94, 1.08); }
+    100% { transform: scale(1); }
   }
 }
 
-@layer utilities {
-  /* Cybersecurity animations */
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite alternate;
-  }
-  
-  .animate-matrix-rain {
-    animation: matrix-rain 3s linear infinite;
-  }
-  
-  .animate-scan {
-    animation: security-scan 2s ease-in-out infinite;
-  }
-  
-  @keyframes pulse-glow {
-    from {
-      box-shadow: 0 0 5px hsl(var(--primary) / 0.5);
-    }
-    to {
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.8);
-    }
-  }
-  
-  @keyframes matrix-rain {
-    0% {
-      transform: translateY(-100%);
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(100vh);
-      opacity: 0;
-    }
-  }
-  
-  @keyframes security-scan {
-    0%, 100% {
-      transform: translateX(-100%);
-    }
-    50% {
-      transform: translateX(100%);
-    }
-  }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .tilt { transition: none; }
+  .companion img { animation: none !important; }
 }
