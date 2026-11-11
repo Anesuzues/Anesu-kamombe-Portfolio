@@ -11,6 +11,15 @@ export default defineConfig(() => ({
   plugins: [
     react(),
   ],
+  build: {
+    // three.js rarely changes: keep it in its own long-cached chunk.
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks: (id: string) => (id.includes("node_modules/three/") ? "three" : undefined),
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

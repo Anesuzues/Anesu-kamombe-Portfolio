@@ -1,29 +1,30 @@
-# Anesu Kamombe - Cybersecurity Portfolio
+# Anesu Kamombe · 3D Portfolio
 
-Modern interactive portfolio showcasing cybersecurity expertise with 3D holographic visualizations, real-time animations, and responsive design.
+Single-page interactive portfolio. A cut-out character lives on a three.js stage behind the content:
 
-## Technologies Used
+- walks in on load and strides across the stage (6-frame side-view walk cycle) as you scroll
+- takes a different pose and a small 3D set for each section (orbits, desk, floating screens, books, confetti)
+- takes idle breaks, falls asleep if you go quiet, reacts when you hover project cards or the CV button
+- dances when clicked, and facepalms when clicked too much
 
-- React
-- TypeScript
-- Three.js
-- Framer Motion
-- Tailwind CSS
-- Vite
-- shadcn-ui
+On small screens the 3D backdrop stays and he becomes a fixed corner companion.
 
-## Getting Started
+## Stack
 
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Start development server: `npm run dev`
-4. Build for production: `npm run build`
+React · TypeScript · Vite · three.js (`@react-three/fiber`, `@react-three/drei`) · Framer Motion · Tailwind CSS
 
-## Features
+## Structure
 
-- Interactive 3D holographic model
-- Smooth animations and transitions
-- Responsive cybersecurity-themed design
-- Multi-page navigation
-- Contact form integration
-- Professional experience showcase
+- `src/data/content.ts`: all copy (profile, skills, experience, projects, certifications) and the per-section pose / quip.
+- `src/components/scene/`: the 3D stage (`Scene.tsx`), per-section sets (`Sets.tsx`) and the animated character (`Character.tsx`).
+- `src/lib/companion.ts`: event bus the page uses to make the character react.
+- `src/components/Sections.tsx`: the HTML content sections.
+- `public/ava/`: character sprites (17 poses plus 5 walk frames), portrait and expression avatars.
+
+## Development
+
+```bash
+npm install
+npm run dev
+npm run build
+```
